@@ -5,14 +5,14 @@ WORKDIR /app
 
 RUN chmod +x mvnw
 RUN ./mvnw package -DskipTests
-RUN mv -f target/*.jar app.jar
+RUN mv -f target/*.war app.war
 
 FROM eclipse-temurin:17-jre
 
 ARG PORT
 ENV PORT=${PORT}
 
-COPY --from=build /app/app.jar .
+COPY --from=build /app/app.war .
 
 RUN useradd runtime
 USER runtime
